@@ -20,6 +20,8 @@ def main(argv=None):
     sub.add_parser('acs')
     x = sub.add_parser('manifest'); x.add_argument('--out')
     x = sub.add_parser('export'); x.add_argument('out')
+    x = sub.add_parser('pages', help='Redacted static GitHub Pages demo of a run store')
+    x.add_argument('out', nargs='?', default='docs/demo'); x.add_argument('--root', default='runs/live')
     a = p.parse_args(argv)
     if a.cmd == 'mcp':
         from .mcp import main as mcp_main
@@ -34,6 +36,10 @@ def main(argv=None):
         if not a.no_serve:
             from .server import serve
             serve(pl, a.port)
+        return
+    if a.cmd == 'pages':
+        from .pages import build_pages
+        print(json.dumps(build_pages(a.root, a.out), indent=2, default=str))
         return
     from .service import Proofline
     pl = Proofline()

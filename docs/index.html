@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proofline · every requirement, proven live</title>
+<meta name="description" content="Proofline is a live verification dashboard and MCP server for Kane CLI. Every acceptance criterion becomes a tile that turns green or red as Kane proves it.">
+<style>
+:root{--bg:#0b0f14;--panel:#121821;--line:#223041;--text:#e6edf3;--dim:#9fb0c0;--pass:#3fb950;--fail:#f85149;--amber:#d29922;--ice:#79c0ff;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+a{color:var(--ice)}main{max-width:1060px;margin:0 auto;padding:40px 22px 80px;overflow-wrap:anywhere}table{display:block;overflow-x:auto}
+header h1{font-size:clamp(32px,8vw,44px);margin:0 0 4px;letter-spacing:-1px}header p.tag{font-size:20px;color:var(--dim);margin:0 0 22px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 8px}.btn{display:inline-block;padding:9px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);text-decoration:none;font-weight:600}
+.btn.primary{background:var(--ice);color:#06121f;border-color:var(--ice)}
+section{margin-top:46px}h2{font-size:24px;margin:0 0 12px}h3{margin:18px 0 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+.kpi b{display:block;font-size:30px}.kpi span{color:var(--dim);font-size:14px}
+.pass{color:var(--pass)}.fail{color:var(--fail)}.amber{color:var(--amber)}
+pre,code{font-family:var(--mono);font-size:13.5px}pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+code{background:#0f1620;padding:1px 5px;border-radius:4px}pre code{background:none;padding:0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}td,th{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:14px}.shots figure{margin:0}.shots img{width:100%;border:1px solid var(--line);border-radius:10px;display:block}
+figcaption{color:var(--dim);font-size:13.5px;margin-top:6px}.pipe{font-family:var(--mono);font-size:14px;color:var(--dim)}
+.note{border-left:3px solid var(--amber);padding:8px 14px;background:var(--panel);border-radius:0 8px 8px 0;color:var(--dim)}
+footer{margin-top:60px;color:var(--dim);font-size:14px;border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Proofline</h1>
+  <p class="tag">Every requirement, proven live. A verification dashboard and MCP server for Kane CLI.</p>
+  <p>Give Proofline a PRD and it drives <code>kane-cli</code> through the whole loop: context, test design,
+  <code>testmd</code> runs, sealed evidence packs, and drift when the PRD changes. Every acceptance criterion
+  becomes a tile that turns green or red as Kane proves it, and the screenshots, steps and logs behind each
+  verdict are one click away. Every artifact is hashed with sha256 and stamped with its creation time.</p>
+  <div class="btns">
+    <a class="btn primary" href="demo/">Open the live-run dashboard</a>
+    <a class="btn" href="demo/manifest.json">Hashed manifest</a>
+    <a class="btn" href="https://github.com/mso-docs/proofline">Source on GitHub</a>
+  </div>
+</header>
+
+<section>
+  <h2>A real Kane CLI run</h2>
+  <p>The <a href="demo/">dashboard demo</a> is a frozen, redacted snapshot of a live session on November 17, 2026,
+  with <code>kane-cli 0.10.5</code> testing the public <a href="https://demo.playwright.dev/todomvc">Playwright TodoMVC demo</a>
+  against <a href="demo/artifacts/sessions/20261117T223723Z-51847f/prd/prd-todomvc-v1.md">this PRD</a>.
+  It is not fixture data: every verdict, step and screenshot came from Kane.</p>
+  <div class="grid">
+    <div class="card kpi"><b>6 / 6</b><span>pipeline stages run live: ingest, extract, list, design, testmd run, maintain</span></div>
+    <div class="card kpi"><b class="pass">3 ACs passed</b><span>AC-1.1, AC-1.2 and AC-1.3, from 2 Kane-designed tests (14 ACs in the PRD; uc-1 designed in this session)</span></div>
+    <div class="card kpi"><b class="amber">2 errors, kept</b><span>the first two runs could not launch Chrome; Proofline records them as errors, not failed ACs</span></div>
+    <div class="card kpi"><b>48</b><span>hashed artifacts, all re-verified (23 screenshots, 18 logs, 2 evidence packs, 2 tests, 2 PRDs, 1 drift report)</span></div>
+  </div>
+  <p class="pipe">context ingest → context extract (14 ACs · 7 use cases) → context list → design tests (2 tests) → testmd run (2 / 2 pass) → maintain (1 stale · 1 new)</p>
+</section>
+
+<section>
+  <h2>What you see</h2>
+  <div class="shots">
+    <figure><a href="demo/?view=map"><img src="screenshots/live-map.png" alt="Requirements map"></a><figcaption>Requirements map: one tile per AC, grouped by use case.</figcaption></figure>
+    <figure><a href="demo/?view=evidence&amp;ac=AC-1.1"><img src="screenshots/live-evidence.png" alt="Evidence view"></a><figcaption>Evidence: Kane's steps and screenshots for AC-1.1.</figcaption></figure>
+    <figure><a href="demo/?view=drift"><img src="screenshots/live-drift.png" alt="Drift view"></a><figcaption>Drift: PRD v1 → v2, stale tests and Kane's reconcile plan.</figcaption></figure>
+    <figure><a href="demo/?view=history"><img src="screenshots/live-history.png" alt="History view"></a><figcaption>History: pass rate, coverage and hashed artifacts per suite run.</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Setup</h2>
+<pre><code>git clone https://github.com/mso-docs/proofline && cd proofline
+python3 -m proofline demo          # fixture run, no account needed; open http://127.0.0.1:8777
+
+npm install -g @testmuai/kane-cli
+kane-cli login                     # OAuth profile; Proofline never sees or stores the token
+python3 -m proofline status        # confirms kane-cli is found
+python3 -m proofline serve         # dashboard on 127.0.0.1:8777 (loopback only)</code></pre>
+  <p>Python 3.10+ standard library only. No pip installs.</p>
+</section>
+
+<section>
+  <h2>Usage</h2>
+<pre><code>python3 -m proofline ingest examples/prd-todomvc-v1.md            # kane-cli context ingest
+python3 -m proofline design uc-1 --max 3                          # kane-cli design tests
+python3 -m proofline run --url https://demo.playwright.dev/todomvc # kane-cli testmd run, every test
+python3 -m proofline maintain examples/prd-todomvc-v2.md          # PRD diff + kane-cli maintain reconcile --plan
+python3 -m proofline manifest --out proof/manifest.json           # hashed artifact manifest
+python3 -m proofline pages docs/demo --root runs                  # redacted static demo like this one
+python3 scripts/scan_pages.py docs                                # pre-publish scan; must print RESULT: PASS</code></pre>
+</section>
+
+<section>
+  <h2>MCP tools</h2>
+  <p><code>python3 -m proofline mcp</code> is a stdio MCP server (JSON-RPC 2.0, no dependencies) for Cursor, Codex or Claude Code.</p>
+  <table>
+    <tr><th>Tool</th><th>What it does</th></tr>
+    <tr><td><code>proofline_status</code></td><td>kane-cli install, current session, pipeline state</td></tr>
+    <tr><td><code>ingest_prd</code></td><td>copy and hash a PRD, run <code>kane-cli context ingest</code>, parse its ACs</td></tr>
+    <tr><td><code>extract_context</code> · <code>list_context</code></td><td><code>kane-cli context extract</code> (agent mode) and <code>context list --json</code></td></tr>
+    <tr><td><code>design_tests</code></td><td><code>kane-cli design tests</code> for a use case, mapping Kane's criteria to PRD ACs</td></tr>
+    <tr><td><code>run_suite</code></td><td><code>kane-cli testmd run</code> per test, sealing evidence packs and screenshots</td></tr>
+    <tr><td><code>maintain_drift</code></td><td>word-level PRD diff plus <code>kane-cli maintain reconcile --plan</code></td></tr>
+    <tr><td><code>get_run</code> · <code>get_evidence</code> · <code>list_acs</code></td><td>one run, the evidence behind an AC, every AC with verdict and flakiness</td></tr>
+    <tr><td><code>compare_runs</code></td><td>regressions and fixes between two runs</td></tr>
+    <tr><td><code>export_manifest</code> · <code>export_dashboard</code> · <code>open_dashboard</code></td><td>hashed manifest, static report, dashboard URL</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Proof of work</h2>
+  <p>The <a href="demo/manifest.json">manifest</a> lists every artifact with <code>path</code>, <code>sha256</code>, <code>bytes</code>,
+  <code>created_at</code> and <code>session_id</code>, re-verifies each hash, and adds a hash over the whole list
+  (<code>manifest_sha256</code> <code>b3a4a9db…7ef92a6</code>). Screenshots are published byte for byte, so their published hash matches.
+  PRDs, tests and the drift report are published redacted. Raw kane-cli logs and sealed evidence packs stay private, but their hashes are listed.</p>
+<pre><code>{
+  "path": "sessions/20261117T223723Z-51847f/prd/prd-todomvc-v1.md",
+  "sha256": "a59100da4c8f654d1a4c8e95601db19f36009e2d64b3ae10ba393fb18656696d",
+  "bytes": 889,
+  "created_at": "2026-11-17T22:37:23.301+00:00",
+  "kind": "prd",
+  "verified": true
+}</code></pre>
+  <h3>Artifacts</h3>
+  <ul>
+    <li><a href="demo/">Dashboard demo</a> (map, evidence, drift, history)</li>
+    <li><a href="demo/manifest.json">manifest.json</a> · <a href="demo/acs.json">acs.json</a> · <a href="demo/snapshot.json">snapshot.json</a></li>
+    <li><a href="demo/artifacts/sessions/20261117T223723Z-51847f/drift.json">drift.json</a>: PRD v1 → v2 drift and Kane's reconcile plan</li>
+    <li>Kane-designed tests: <a href="demo/artifacts/sessions/20261117T223723Z-51847f/tests/.testmuai/tests/first-titled-todo-appears-with-one-item-left_test.md">first titled todo</a> · <a href="demo/artifacts/sessions/20261117T223723Z-51847f/tests/.testmuai/tests/empty-title-does-not-create-a-todo_test.md">empty title</a></li>
+    <li><a href="https://github.com/mso-docs/proofline">Source</a>, including 30 unit tests and an MCP round-trip test</li>
+  </ul>
+  <p class="note">Redaction: account names, emails, Kane share links, test-manager and artifact-store URLs, account ids, tokens, home paths and host names are replaced with placeholders such as <code>&lt;KANE_SHARE_LINK&gt;</code>. <code>scripts/scan_pages.py</code> (redaction scan, gitleaks, and a check for private values) has to pass before this site is published.</p>
+</section>
+
+<footer>Proofline · MIT · Mackenzie O'Brien, Mac Labs AI · built for the Kane CLI hackathon, November 2026</footer>
+</main>
+</body>
+</html>

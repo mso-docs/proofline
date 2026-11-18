@@ -1,0 +1,128 @@
+[
+  {
+    "id": "AC-1.1",
+    "title": "Typing a title and pressing Enter adds it to the list",
+    "use_case": "UC-1",
+    "verdict": "pass",
+    "flaky": false,
+    "runs": 1,
+    "test": ".testmuai/tests/first-titled-todo-appears-with-one-item-left_test.md"
+  },
+  {
+    "id": "AC-1.2",
+    "title": "Empty titles are not added",
+    "use_case": "UC-1",
+    "verdict": "pass",
+    "flaky": false,
+    "runs": 1,
+    "test": ".testmuai/tests/empty-title-does-not-create-a-todo_test.md"
+  },
+  {
+    "id": "AC-1.3",
+    "title": "The counter shows \"1 item left\" after the first todo",
+    "use_case": "UC-1",
+    "verdict": "pass",
+    "flaky": false,
+    "runs": 1,
+    "test": ".testmuai/tests/first-titled-todo-appears-with-one-item-left_test.md"
+  },
+  {
+    "id": "AC-2.1",
+    "title": "Clicking the checkbox marks a todo completed",
+    "use_case": "UC-2",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-2.2",
+    "title": "\"Toggle all\" completes every todo",
+    "use_case": "UC-2",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-2.3",
+    "title": "\"Clear completed\" removes completed todos",
+    "use_case": "UC-2",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-3.1",
+    "title": "\"Active\" shows only open todos",
+    "use_case": "UC-3",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-3.2",
+    "title": "\"Completed\" shows only completed todos",
+    "use_case": "UC-3",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-3.3",
+    "title": "The selected filter is highlighted",
+    "use_case": "UC-3",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-4.1",
+    "title": "Double-clicking a todo opens it for editing",
+    "use_case": "UC-4",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-4.2",
+    "title": "Saving an empty edit deletes the todo",
+    "use_case": "UC-4",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-4.3",
+    "title": "The destroy button removes a todo",
+    "use_case": "UC-4",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-5.1",
+    "title": "Todos survive a page reload",
+    "use_case": "UC-5",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  },
+  {
+    "id": "AC-5.2",
+    "title": "The active filter survives a page reload",
+    "use_case": "UC-5",
+    "verdict": "idle",
+    "flaky": false,
+    "runs": 0,
+    "test": null
+  }
+]

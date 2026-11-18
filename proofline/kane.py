@@ -96,6 +96,11 @@ class Kane:
                 self.store.emit(session_id, run_id, 'log', {'line': line[:400]})
         for name in ('stdout.ndjson', 'stderr.log'):
             self.store.add_artifact(session_id, rdir / name, kind='log', run_id=run_id)
+        if kind != 'testmd-run':
+            # testmd runs get their verdict from run_suite; every other command is closed here
+            done = next((e for e in reversed(events) if e.get('type') == 'done'), None)
+            summary = (done or {}).get('status') or (f'exit code {code}' if code else 'complete')
+            self.store.finish_run(run_id, 'done' if code == 0 else 'error', code, summary)
         hint = EVIDENCE_HINT.search(stderr)
         evidence = self._resolve(hint.group(1)) if hint else None
         return dict(run_id=run_id, exit_code=code, events=events, stderr=stderr, evidence=evidence,

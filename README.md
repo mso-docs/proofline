@@ -8,6 +8,36 @@ with the screenshots, steps and logs behind each verdict one click away.
 
 ![Requirements map](docs/screenshots/map-dark.png)
 
+## Live run, redacted demo
+
+[`docs/`](docs) is a GitHub Pages site: a landing page and a static, redacted snapshot of a real
+`kane-cli 0.10.5` session against the public [Playwright TodoMVC demo](https://demo.playwright.dev/todomvc)
+(Nov 17, 2026). All six stages ran live: `context ingest`, `context extract` (14 ACs, 7 use cases),
+`context list`, `design tests` (2 tests), `testmd run` (AC-1.1, AC-1.2 and AC-1.3 pass; the first two
+attempts could not launch Chrome and are kept as errors), and `maintain reconcile --plan` (1 stale test,
+1 new AC). The dashboard is at [`docs/demo/`](docs/demo/index.html) and the hashed manifest of all 48
+artifacts is at [`docs/demo/manifest.json`](docs/demo/manifest.json).
+
+```bash
+python3 -m proofline pages docs/demo --root runs/live   # rebuild the redacted snapshot
+python3 scripts/scan_pages.py docs                      # redaction scan + gitleaks + private-value check
+```
+
+Account names, emails, Kane share links, test-manager and artifact-store URLs, account ids, tokens,
+home paths and host names are replaced with placeholders. Raw logs and evidence packs are never copied,
+but their hashes stay in the manifest.
+
+![Live run, requirements map](docs/screenshots/live-map.png)
+
+## Kane CLI hackathon
+
+* **What it is:** a verification dashboard and MCP server that turns a PRD into acceptance-criteria tiles
+  that Kane CLI proves live, with evidence, drift and a hashed proof-of-work manifest.
+* **Kane commands used:** `context ingest`, `context extract`, `context list`, `design tests`,
+  `testmd run`, `maintain reconcile --plan`, all run live in agent or CI mode with an OAuth login.
+* **Try it:** `python3 -m proofline demo` (no account), or the redacted live snapshot in `docs/`.
+* **Proof:** [`docs/demo/manifest.json`](docs/demo/manifest.json), sha256 and `created_at` for every artifact.
+
 ## 30-second quickstart
 
 ```bash
@@ -142,7 +172,7 @@ python3 -m unittest discover -s tests -t .
 
 Covers the adapter (both stream shapes, `context list --json`, evidence packs and zip-path safety),
 PRD parsing and drift, redaction, the full pipeline with flaky detection and manifest verification,
-the HTTP server and SSE stream, static export, and an MCP round-trip over real stdio.
+the HTTP server and SSE stream, static export, the redacted Pages export, and an MCP round-trip over real stdio.
 
 ## License
 

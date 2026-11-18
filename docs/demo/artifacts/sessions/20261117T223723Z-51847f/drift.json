@@ -1,0 +1,194 @@
+{
+  "old": "prd-todomvc-v1.md",
+  "new": "prd-todomvc-v2.md",
+  "changed": [
+    "AC-1.2",
+    "AC-3.3"
+  ],
+  "added": [
+    "AC-2.4"
+  ],
+  "removed": [
+    "AC-5.2"
+  ],
+  "stale": [
+    {
+      "ac": "AC-1.2",
+      "test": ".testmuai/tests/empty-title-does-not-create-a-todo_test.md",
+      "reason": "criterion text changed",
+      "was": "Empty titles are not added",
+      "now": "Titles that are empty or only spaces are not added"
+    }
+  ],
+  "untested_new": [
+    "AC-2.4"
+  ],
+  "lines": [
+    {
+      "kind": "hunk",
+      "text": "@@ -6 +6 @@"
+    },
+    {
+      "kind": "ctx",
+      "old": 6,
+      "new": 6,
+      "html": "### AC-1.1 Typing a title and pressing Enter adds it to the list"
+    },
+    {
+      "kind": "del",
+      "old": 7,
+      "new": null,
+      "html": "### AC-1.2 <mark>Empty titles</mark> are not added"
+    },
+    {
+      "kind": "add",
+      "old": null,
+      "new": 7,
+      "html": "### AC-1.2 <mark>Titles that are empty or only spaces</mark> are not added"
+    },
+    {
+      "kind": "ctx",
+      "old": 8,
+      "new": 8,
+      "html": "### AC-1.3 The counter shows \"1 item left\" after the first todo"
+    },
+    {
+      "kind": "hunk",
+      "text": "@@ -13 +13 @@"
+    },
+    {
+      "kind": "ctx",
+      "old": 13,
+      "new": 13,
+      "html": "### AC-2.3 \"Clear completed\" removes completed todos"
+    },
+    {
+      "kind": "add",
+      "old": null,
+      "new": 14,
+      "html": "### AC-2.4 Completed todos are shown with a strikethrough"
+    },
+    {
+      "kind": "ctx",
+      "old": 14,
+      "new": 15,
+      "html": ""
+    },
+    {
+      "kind": "hunk",
+      "text": "@@ -17 +18 @@"
+    },
+    {
+      "kind": "ctx",
+      "old": 17,
+      "new": 18,
+      "html": "### AC-3.2 \"Completed\" shows only completed todos"
+    },
+    {
+      "kind": "del",
+      "old": 18,
+      "new": null,
+      "html": "### AC-3.3 The selected filter is highlighted"
+    },
+    {
+      "kind": "add",
+      "old": null,
+      "new": 19,
+      "html": "### AC-3.3 The selected filter is highlighted <mark>and reflected in the URL hash</mark>"
+    },
+    {
+      "kind": "ctx",
+      "old": 19,
+      "new": 20,
+      "html": ""
+    },
+    {
+      "kind": "hunk",
+      "text": "@@ -26 +27 @@"
+    },
+    {
+      "kind": "ctx",
+      "old": 26,
+      "new": 27,
+      "html": "### AC-5.1 Todos survive a page reload"
+    },
+    {
+      "kind": "del",
+      "old": 27,
+      "new": null,
+      "html": "### AC-5.2 The active filter survives a page reload"
+    }
+  ],
+  "plus": 3,
+  "minus": 3,
+  "kane": {
+    "run_id": "maintain-d026f890",
+    "exit_code": 0,
+    "final": {
+      "status": "complete",
+      "summary": "10 proposals (3 add, 7 modify)"
+    },
+    "command": "kane-cli maintain reconcile --from prd-todomvc-v2.md --mode agent --source-id prd-todomvc-v1 --plan",
+    "plan": {
+      "rows": [
+        {
+          "kind": "ADD",
+          "ref": "uc-10",
+          "why": "new use-case extracted from prd-todomvc-v1"
+        },
+        {
+          "kind": "ADD",
+          "ref": "uc-11",
+          "why": "new use-case extracted from prd-todomvc-v1"
+        },
+        {
+          "kind": "ADD",
+          "ref": "uc-12",
+          "why": "new use-case extracted from prd-todomvc-v1"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-1",
+          "why": "updated: description, criteria (staged \u2014 commits on approval)"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-2",
+          "why": "updated: description, criteria (staged \u2014 commits on approval)"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-6",
+          "why": "updated: description, summary, value, criteria (staged \u2014 commits on approval)"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-7",
+          "why": "updated: description, summary, criteria (staged \u2014 commits on approval)"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-3",
+          "why": "stale (structural)"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-4",
+          "why": "stale (structural)"
+        },
+        {
+          "kind": "MODIFY",
+          "ref": "uc-5",
+          "why": "stale (structural)"
+        }
+      ],
+      "counts": {
+        "add": 3,
+        "modify": 7
+      },
+      "archive": 0,
+      "plan": "2026-11-17T22-55-07-387Z-prd-todomvc-v1.json",
+      "summary": "10 proposals (3 add, 7 modify)"
+    }
+  }
+}

@@ -24,7 +24,7 @@ return `<div class="top"><div class="logo"><div class="mark"></div>Proofline</di
 function pipe(){const p=S.data.status.pipeline||{};const order=S.data.pipeline_order;const k=S.data.status.kane||{};
 const cls=s=>!s?'':s.state==='done'?'done':s.state==='run'?'run':s.state==='fail'?'fail':'';
 return `<div class="pipe"><span class="k">KANE-CLI ▸</span>${order.map((n,i)=>{const s=p[n];return `${i?`<div class="conn ${cls(p[order[i-1]])==='done'&&s?'done':''}"></div>`:''}<div class="stage ${cls(s)}"><div class="dot">${cls(s)==='done'?'✓':cls(s)==='run'?'':cls(s)==='fail'?'✕':i+1}</div><div><b>${n}</b><small>${esc(s?s.detail||s.state:'idle')}</small></div></div>`}).join('')}
-${(k.fixture||S.data.target?.fixture)?'<span class="mockflag">fixture kane-cli · scripted verdicts</span>':''}<div class="target">kane-cli <span class="url">${esc(k.installed?k.version:'not installed')}</span></div></div>`}
+${(k.fixture||S.data.target?.fixture)?'<span class="mockflag">fixture kane-cli · scripted verdicts</span>':S.data.redacted?`<span class="mockflag">live kane-cli ${esc(k.version||'')} run · redacted static snapshot</span>`:''}<div class="target">kane-cli <span class="url">${esc(k.installed?k.version:'not installed')}</span></div></div>`}
 
 function tiles(){const c=counts(),st=stale();
 if(!S.data.acs.length)return `<div class="canvas-head"><div><h1>Requirements map</h1><p>No acceptance criteria yet. Ingest a PRD: <span class="mono">python3 -m proofline ingest prd.md</span> or the <span class="mono">ingest_prd</span> MCP tool.</p></div></div>`;
@@ -101,7 +101,7 @@ const flaky=S.data.acs.filter(a=>a.flaky),flips=S.data.acs.filter(a=>a.flips>0).
 const spark=vals=>{const w=200,h=20;if(vals.length<2)vals=[vals[0]||0,vals[0]||0];return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${vals.map((v,i)=>`${(i/(vals.length-1)*w).toFixed(1)},${(h-2-v/100*(h-4)).toFixed(1)}`).join(' ')}" fill="none" stroke="var(--amber)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`};
 const uc=groups().map(u=>{const per=list.map(([id])=>{const v=u.acs.flatMap(a=>a.history.filter(h=>h.suite===id).map(h=>h.value));return v.length?Math.round(v.filter(x=>x>=1).length/v.length*100):0});return [u.id+' '+u.name,per,(per.at(-1)??0)+'%']});
 const d=(a)=>a.length>1?a.at(-1)-a[0]:0;
-return `<div class="canvas-head"><div><h1>History</h1><p>${list.length} suite runs · every verdict is kept, nothing is overwritten.</p></div><div class="legend" style="align-items:center"><div class="exports"><a class="btn" href="/api/acs" download="acs.json">⇩ ACs JSON</a><a class="btn" href="/api/manifest" download="manifest.json">⇩ Manifest</a><span class="btn primary mono" title="python3 -m proofline export site/">export_dashboard</span></div></div></div>
+return `<div class="canvas-head"><div><h1>History</h1><p>${list.length} suite runs · every verdict is kept, nothing is overwritten.</p></div><div class="legend" style="align-items:center"><div class="exports"><a class="btn" href="${S.data.static?'acs.json':'/api/acs'}" download="acs.json">⇩ ACs JSON</a><a class="btn" href="${S.data.static?'manifest.json':'/api/manifest'}" download="manifest.json">⇩ Manifest</a><span class="btn primary mono" title="python3 -m proofline export site/">export_dashboard</span></div></div></div>
 <div class="hist-grid"><div class="box bigchart"><h3>Pass rate and coverage by suite run</h3><div class="sub"><span style="color:var(--amber)">━</span> coverage &nbsp; <span style="color:var(--pass)">┅</span> pass rate of verdicts</div>
 <div class="hist-top"><div class="kpi"><b>${cov.at(-1)??0}%</b><span>coverage <span class="delta ${d(cov)>=0?'up':''}">${d(cov)>=0?'▲':'▼'} ${Math.abs(d(cov))} pts</span></span></div><div class="kpi"><b>${pass.at(-1)??0}%</b><span>pass rate <span class="delta ${d(pass)>=0?'up':''}">${d(pass)>=0?'▲':'▼'} ${Math.abs(d(pass))} pts</span></span></div><div class="kpi"><b>${flaky.length}</b><span>flaky tests</span></div><div class="kpi"><b>${S.data.manifest_count}</b><span>hashed artifacts</span></div></div>
 <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">${grid}${line(pass,'var(--pass)',1)}${line(cov,'var(--amber)')}</svg></div>
@@ -120,7 +120,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-view],[dat
 if(t.dataset.view)return setView(t.dataset.view);if(t.dataset.theme){S.theme=t.dataset.theme;localStorage.setItem('pl-theme',S.theme);return render()}
 if(t.dataset.open||t.dataset.ac)return setView('evidence',t.dataset.open||t.dataset.ac);if(t.dataset.close)return setView('map')});
 
-function index(d){d.traces={};return d}
+function index(d){d.traces=d.traces||{};return d}
 async function load(){if(window.PROOFLINE_SNAPSHOT){S.data=index(window.PROOFLINE_SNAPSHOT);return render()}
 const r=await fetch('/api/snapshot');S.data=index(await r.json());
 if(S.view==='evidence'&&S.sel!==undefined)await loadTrace();render()}
